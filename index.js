@@ -34,7 +34,15 @@ app.get('/callback',(req, res) => {
 			})
 			.then(response => {
 				if (response.status === 200) {
-				  res.send(`<pre>${JSON.stringify(response.data, null, 2)}</pre>`);
+				const { access_token, token_type } = response.data;
+				axios.get('https://api.spotify.get/v1/me', {
+
+					headers:{ Authorization:`${token type} ${access_token}` })
+					.then(response => {
+						res.send(
+								})
+						});
+
 				} else {
 				  res.send(response);
 				}
