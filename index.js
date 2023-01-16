@@ -32,14 +32,16 @@ app.get('/callback',(req, res) => {
 	Authorization: `Basic ${new Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64')}`,
 		},
 			})
-	.then(response => {
-		if(response.status === 200) {
-			res.send(`<pre>{$JSON.stringify(response.data, null, 2)}</pre>`);
-		} else {
-			res.send(response);}
-	})
-		.catch(error => { res.send(error);}
-);
+			.then(response => {
+				if (response.status === 200) {
+				  res.send(`<pre>${JSON.stringify(response.data, null, 2)}</pre>`);
+				} else {
+				  res.send(response);
+				}
+			  })
+			  .catch(error => {
+				res.send(error);
+			  });
 });
 
 app.listen(port, () => {
