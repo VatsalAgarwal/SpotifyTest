@@ -34,24 +34,42 @@ app.get('/callback',(req, res) => {
 			})
 			.then(response => {
 				if (response.status === 200) {
-				const { access_token, token_type } = response.data;
-				axios.get('https://api.spotify.get/v1/me', {
+					const { access_token, token_type } = response.data;
 
-					headers:{ Authorization:`${token type} ${access_token}` })
-					.then(response => {
-						res.send(
-								})
-						});
-
-				} else {
-				  res.send(response);
-				}
-			  })
-			  .catch(error => {
-				res.send(error);
-			  });
+					axios.get('https://api.spotify.com/v1/me', {
+					  headers: {
+						Authorization: `${token_type} ${access_token}`
+					  }
+					})
+					  .then(response => {
+						res.send(`<pre>${JSON.stringify(response.data, null, 2)}</pre>`);
+					  })
+					  .catch(error => {
+						res.send(error);
+					  });
+			  
+				  } else {
+					res.send(response);
+				  }
+				})
+				.catch(error => {
+				  res.send(error);
+				});
 });
+
+app.get('/refresh_token', (req, res) => {
+	const { refresh_token } = req.query;
+	
+	axios({
+		method: 'post',
+		url: 'https://accounts.spotify.com/api/token',
+		data: querystring.stringify({})
+		})
+
+})
 
 app.listen(port, () => {
 	console.log(`Live on ${port}`);
 });
+
+
